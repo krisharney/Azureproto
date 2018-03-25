@@ -23,7 +23,7 @@ namespace AzureProto
         private void button1_Click(object sender, EventArgs e)
         {
             var file = new FolderBrowserDialog();
-            file.RootFolder = Environment.SpecialFolder.ApplicationData;
+            //file.RootFolder = Environment.SpecialFolder.ApplicationData;
             file.ShowDialog(this);
             if (string.IsNullOrEmpty(file.SelectedPath)) { MessageBox.Show("Please select a directory"); return; }
 
