@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BlobTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Data">
+          <Key>
+            <PropertyRef Name="BlobTestId" />
+          </Key>
+          <Property Name="BlobTestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IsFolder" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Data_Data">
+          <End Role="Data" Type="Self.Data" Multiplicity="0..1" />
+          <End Role="Data1" Type="Self.Data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Data">
+              <PropertyRef Name="BlobTestId" />
+            </Principal>
+            <Dependent Role="Data1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlobTestModelStoreContainer">
+          <EntitySet Name="Data" EntityType="Self.Data" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Data_Data" Association="Self.FK_Data_Data">
+            <End Role="Data" EntitySet="Data" />
+            <End Role="Data1" EntitySet="Data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BlobTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Datum">
+          <Key>
+            <PropertyRef Name="BlobTestId" />
+          </Key>
+          <Property Name="BlobTestId" Type="Int32" Nullable="false" />
+          <Property Name="TestGuid" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <NavigationProperty Name="Data1" Relationship="Self.FK_Data_Data" FromRole="Data" ToRole="Data1" />
+          <NavigationProperty Name="Datum1" Relationship="Self.FK_Data_Data" FromRole="Data1" ToRole="Data" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsFolder" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Data_Data">
+          <End Role="Data" Type="Self.Datum" Multiplicity="0..1" />
+          <End Role="Data1" Type="Self.Datum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Data">
+              <PropertyRef Name="BlobTestId" />
+            </Principal>
+            <Dependent Role="Data1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BlobTestEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Data" EntityType="Self.Datum" />
+          <AssociationSet Name="FK_Data_Data" Association="Self.FK_Data_Data">
+            <End Role="Data" EntitySet="Data" />
+            <End Role="Data1" EntitySet="Data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BlobTestModelStoreContainer" CdmEntityContainer="BlobTestEntities1">
+          <EntitySetMapping Name="Data">
+            <EntityTypeMapping TypeName="BlobTestModel.Datum">
+              <MappingFragment StoreEntitySet="Data">
+                <ScalarProperty Name="IsFolder" ColumnName="IsFolder" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="BlobTestId" ColumnName="BlobTestId" />
+                <ScalarProperty Name="TestGuid" ColumnName="TestGuid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

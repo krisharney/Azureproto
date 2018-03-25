@@ -16,5 +16,24 @@ namespace AzureProto
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var d = new CreateData();
+            
+            d.ShowDialog(this);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var d = new SendData();
+            d.ShowDialog(this);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var d = new GetData();
+            d.ShowDialog(this);
+        }
     }
 }
